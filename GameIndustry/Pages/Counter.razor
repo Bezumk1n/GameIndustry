@@ -1,4 +1,6 @@
 ﻿@page "/counter"
+@inject SingletonService single;
+@inject TransientService transient;
 
 <div class="row">
     <div class="col alert alert-secondary text-center">
@@ -21,11 +23,21 @@
     </div>
 </div>
 
+<div class="row mt-3">
+    <div class="col-6 text-center alert alert-danger">
+        Singleton count : @single.Value
+    </div>
+    <div class="col-6 text-center alert alert-primary">
+        Transient count : @transient.Value
+    </div>
+</div>
 @code {
     private int currentCount = 0;
 
     private void IncrementCount()
     {
         currentCount++;
+        single.Value++;
+        transient.Value++;
     }
 }

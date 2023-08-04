@@ -1,5 +1,5 @@
 ﻿@page "/"
-
+@inject IRepository repository;
 <div class="row">
     <div class="col text-xl-center">
         <h1>Welcome to Our Game Industry page</h1>
@@ -16,34 +16,20 @@
 
 <IndividualGame Game="oneGameToShow" IsTable="false" DisplayButtons="true" SwitchGame="ShowNewGame"/>
 
+<div class="row">
+    <div class="col text-center">
+        <button @onclick="AddNewGame" class="btn btn-success">Add new game</button>
+    </div>
+</div>
+
 @code{
     private List<Game> _games;
     private Random rnd;
     private Game oneGameToShow;
     protected async override Task OnInitializedAsync()
     {
-        await Task.Delay(3000);
-        _games = new List<Game>()
-        {
-            new Game()
-            {
-                Name="Farming simulator 2019",
-                Genre="Simulator",
-                ReleaseDate=new DateTime(2018, 11, 19)
-            },
-            new Game()
-            {
-                Name="The Witcher 3",
-                Genre="Action/RPG",
-                ReleaseDate=new DateTime(2015, 5, 18)
-            },
-            new Game()
-            {
-                Name="Destroy all humans",
-                Genre="Action/Adventure",
-                ReleaseDate=new DateTime(2020, 07, 28)
-            },
-        };
+        _games = await repository.GetAll();
+
         rnd = new Random(DateTime.Now.Millisecond);
         oneGameToShow = _games[rnd.Next(0, _games.Count)];
     }
@@ -68,5 +54,11 @@
                 ReleaseDate = DateTime.Now
             };
         return tempGame;
+    }
+
+    private void AddNewGame()
+    {
+        Game game = new Game() { Name = "Game for test", Genre = "Test genre", ReleaseDate = DateTime.Now };
+        _games.Add(game);
     }
 }
