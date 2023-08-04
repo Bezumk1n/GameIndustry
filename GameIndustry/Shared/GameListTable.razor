@@ -1,0 +1,33 @@
+﻿<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Release date</th>
+                <th>
+                    <input type="checkbox" @bind="displayButtons"/>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+         <GenericList ListOfItems="Games">
+             <ItemTemplate Context="game">
+                 <IndividualGame Game="game" DeleteGame="DeleteTheGame" DisplayButtons="displayButtons" IsTable="true"></IndividualGame>
+             </ItemTemplate>
+         </GenericList>
+        </tbody>
+    </table>
+</div>
+
+@code
+{
+    [Parameter] public List<Game> Games { get; set; }
+
+    private bool displayButtons = false;
+
+    private void DeleteTheGame(Game game)
+    {
+        Games.Remove(game);
+    }
+}

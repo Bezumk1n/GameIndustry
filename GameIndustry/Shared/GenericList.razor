@@ -1,0 +1,37 @@
+﻿@typeparam TItem
+
+@if (ListOfItems == null)
+{
+    if (ChildContentNull != null)
+        @ChildContentNull
+        else
+        {
+            <img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/attachments/delivery/asset/c49c83ef51b0c4230f8f39560b8250a3-1596267998/navy_for-light_bg/make-animated-logo-loader-for-your-website.gif" height="200" />
+        }
+    }
+    else if (!ListOfItems.Any())
+    {
+        if (ChildContentEmpty != null)
+            @ChildContentEmpty
+            else
+            {
+                <img src="https://zenprospect-production.s3.amazonaws.com/uploads/pictures/6409b43a00d03f0001ea66f0/picture" height="200" />
+            }
+        }
+        else
+        {
+            @foreach (var item in ListOfItems)
+            {
+                @ItemTemplate(item)
+            }
+        }
+
+
+@code {
+    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
+    [Parameter] public List<TItem> ListOfItems { get; set; }
+
+    [Obsolete]
+    [Parameter] public RenderFragment ChildContentNull { get; set; }
+    [Parameter] public RenderFragment ChildContentEmpty { get; set; }
+}

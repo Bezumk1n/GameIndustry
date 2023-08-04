@@ -1,0 +1,72 @@
+﻿@page "/"
+
+<div class="row">
+    <div class="col text-xl-center">
+        <h1>Welcome to Our Game Industry page</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col text-xl-center">
+        <h2>Show all games in MOCK Database:</h2>
+    </div>
+</div>
+
+<GameListTable Games="_games"></GameListTable>
+
+<IndividualGame Game="oneGameToShow" IsTable="false" DisplayButtons="true" SwitchGame="ShowNewGame"/>
+
+@code{
+    private List<Game> _games;
+    private Random rnd;
+    private Game oneGameToShow;
+    protected async override Task OnInitializedAsync()
+    {
+        await Task.Delay(3000);
+        _games = new List<Game>()
+        {
+            new Game()
+            {
+                Name="Farming simulator 2019",
+                Genre="Simulator",
+                ReleaseDate=new DateTime(2018, 11, 19)
+            },
+            new Game()
+            {
+                Name="The Witcher 3",
+                Genre="Action/RPG",
+                ReleaseDate=new DateTime(2015, 5, 18)
+            },
+            new Game()
+            {
+                Name="Destroy all humans",
+                Genre="Action/Adventure",
+                ReleaseDate=new DateTime(2020, 07, 28)
+            },
+        };
+        rnd = new Random(DateTime.Now.Millisecond);
+        oneGameToShow = _games[rnd.Next(0, _games.Count)];
+    }
+
+    private void ShowNewGame()
+    {
+        oneGameToShow = SwitchGame();
+    }
+
+    private Game SwitchGame()
+    {
+        Game tempGame;
+        if (_games.Any())
+        {
+            int iterator = rnd.Next(0, _games.Count);
+            tempGame = _games[iterator];
+        }
+        else
+            tempGame = new Game()
+            {
+                Name = "No items in array",
+                ReleaseDate = DateTime.Now
+            };
+        return tempGame;
+    }
+}
