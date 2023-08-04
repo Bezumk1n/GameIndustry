@@ -28,8 +28,8 @@
 
 
 @code {
-    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
     [Parameter] public List<TItem> ListOfItems { get; set; }
+    [Parameter] public RenderFragment<TItem> ItemTemplate { get; set; }
 
     [Obsolete]
     [Parameter] public RenderFragment ChildContentNull { get; set; }

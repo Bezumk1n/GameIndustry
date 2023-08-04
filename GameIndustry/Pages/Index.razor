@@ -26,6 +26,9 @@
     private List<Game> _games;
     private Random rnd;
     private Game oneGameToShow;
+
+    //private GameListTable gameList;
+
     protected async override Task OnInitializedAsync()
     {
         _games = await repository.GetAll();
@@ -58,6 +61,7 @@
 
     private void AddNewGame()
     {
+        //gameList.DoSomething();
         Game game = new Game() { Name = "Game for test", Genre = "Test genre", ReleaseDate = DateTime.Now };
         _games.Add(game);
     }
